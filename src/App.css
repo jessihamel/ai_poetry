@@ -1,0 +1,164 @@
+@import url('https://fonts.googleapis.com/css?family=Rubik:300,400,500|Alegreya');
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+.App {
+  font-family: "Rubik", sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  width: 80%;
+  margin-left: 10%;
+}
+
+.App-logo {
+  height: 80px;
+}
+
+.App-header {
+  text-align: center;
+  height: 150px;
+}
+
+h2 {
+  font-size: 3em;
+  padding: 20px;
+  font-family: "Alegreya", serif;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+}
+
+h3 {
+  font-size: 1.5em;
+  line-height: 1.3em;
+}
+
+h4 {
+  font-size: 1.3em;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.intro-text {
+  padding-top: 15px;
+  line-height: 1.2em;
+}
+
+select {
+  margin-top: 20px;
+}
+
+pre {
+ white-space: pre-wrap;       /* css-3 */
+ white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+ white-space: -pre-wrap;      /* Opera 4-6 */
+ white-space: -o-pre-wrap;    /* Opera 7 */
+ word-wrap: break-word;       /* Internet Explorer 5.5+ */
+ text-align: left;
+}
+
+.text-viz {
+  margin-top: 30px;
+  margin-bottom: 50px;
+}
+
+.poem-text {
+  font-family: "Alegreya", serif;
+  line-height: 1.3em;
+  padding: 0 15px;
+  display: inline-block;
+  font-size: 16px;
+}
+
+.visualization {
+  display: flex;
+  padding: 30px 15px;
+}
+
+.viz-1 {
+  width: 50%;
+}
+.viz-2 {
+  width: 50%;
+}
+
+.emotion-sliders {
+  margin: 0 auto;
+  padding-top: 10px;
+}
+
+.emotion-slider {
+  margin: 0 auto;
+  width: 250px;
+  clear: both;
+  padding-bottom: 4px;
+}
+
+.emotion-slider span {
+  text-align: right;
+  padding-right: 10px;
+  float: left;
+}
+
+.emotion-slider .emotion-question,
+.emotion-slider input {
+  width: 150px;
+  float: right;
+}
+
+.emotion-path {
+  mix-blend-mode: multiply;
+}
+
+.reveal-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.emotion-graph {
+  border: 1px solid black;
+  margin: 20px 0;
+}
