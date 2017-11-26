@@ -3,7 +3,7 @@ import poetry from './data/poetry.csv';
 import {csv, text} from 'd3-request';
 import Dropdown from './components/Dropdown';
 import Visualization from './components/Visualization'
-import shakespeare from './shakespeare.svg';
+import aiShakespeare from './aishakespeare.svg';
 import './App.css';
 
 class App extends Component {
@@ -38,11 +38,10 @@ class App extends Component {
     return (
       <div className='App'>
         <div className='App-header'>
-          <img src={shakespeare} className='App-logo' alt='logo' />
+          <img src={aiShakespeare} className='App-logo' alt='logo' />
           <h2>Can an A.I. read poetry?</h2>
-          <h3>Pick a poem to read, select the primary emotions, and see how an Artificial Intelligence measures up</h3>
           <div className='intro-text'>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+            Each poem listed below has been run through a linguistic analysis service (<a href="https://www.ibm.com/watson/services/tone-analyzer/">IBM Watson</a>) to determine the levels of five different emotions: joy, sadness, anger, disgust and fear. Although this technology is often used in customer service applications, I wanted to see how it measures up&mdash;or doesn't&mdash;when fed classic poems. Give it a try yourself. Pick a poem, adjust the emotion sliders to match your interpretation, and see how your interpretation compares to an A.I.
           </div>
           <Dropdown selected={this.state.selectedPoem} changePoem={this._changePoem} options={this.state.poems}/>
           <div className='text-viz'>

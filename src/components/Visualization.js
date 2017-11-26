@@ -19,6 +19,7 @@ export default class Visualization extends React.Component {
       showAI: false
     }
     this._onChangeSlider = this._onChangeSlider.bind(this)
+    this._showAI = this._showAI.bind(this)
     window.onresize = this._onResize.bind(this)
   }
 
@@ -29,6 +30,7 @@ export default class Visualization extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (this.props.selected !== nextProps.selected) {
       this._fetchPoemAnalysis(nextProps.selected)
+      this._resetEmotions()
     }
   }
 
@@ -44,7 +46,7 @@ export default class Visualization extends React.Component {
   }
 
   _setWidth() {
-    const vizWidth = this.vizElement.clientWidth
+    const vizWidth = Math.floor(this.vizElement.clientWidth)
     this.setState({
       vizSize: vizWidth,
     })
@@ -58,15 +60,27 @@ export default class Visualization extends React.Component {
       }
       const analysis = {}
       data.document_tone.tone_categories[0].tones.forEach(tone => {
-        console.log(tone)
         analysis[tone['tone_name']] = {
           score: tone.score * 100,
           color: colors[emotions.indexOf(tone['tone_name'])]
         }
       })
-      console.log(analysis)
       this.setState({analysis})
     })
+  }
+
+  _resetEmotions() {
+    this.setState({
+      emotions: emotions.reduce((a,b,i) => {
+        a[b] = {score: '50', color: colors[i]}
+        return a
+      }, {}),
+      showAI: false
+    })
+  }
+
+  _showAI() {
+    this.setState({showAI: true})
   }
 
   _returnColorIcon(emotion) {
@@ -77,52 +91,55 @@ export default class Visualization extends React.Component {
     )
   }
 
+  _returnInputs(isAI) {
+    const data = isAI ? this.state.analysis : this.state.emotions
+    return Object.keys(data).map(emotion => {
+      const inputEl = isAI && !this.state.showAI ?
+        <span className='emotion-question'>?</span> :
+        (<input
+          type='range'
+          min='0'
+          max='100'
+          value={data[emotion].score}
+          className='slider'
+          id={emotion}
+          onChange={isAI ? () => {} : this._onChangeSlider}
+          style={{opacity: isAI ? 0.6 : 1}}
+        />)
+      return (
+        <div
+          className='emotion-slider'
+          key={emotion}
+          style={{opacity : isAI && !this.state.showAI ? '0.5' : '1'}}
+        >
+          {this._returnColorIcon(emotion)}
+          <span style={{lineHeight: '18px'}}>{emotion}</span>
+          {inputEl}
+        </div>
+      )
+    })
+  }
+
   render() {
-    const inputs = Object.keys(this.state.emotions).map(emotion => {
-      return (
-        <div className='emotion-slider' key={emotion}>
-          {this._returnColorIcon(emotion)}
-          <span style={{lineHeight: '18px'}}>{emotion}</span>
-          <input
-            type='range'
-            min='0'
-            max='100'
-            value={this.state.emotions[emotion].score}
-            className='slider'
-            id={emotion}
-            onChange={this._onChangeSlider}
-          />
-        </div>
-      )
-    })
-    const aIInputs = Object.keys(this.state.emotions).map(emotion => {
-      return (
-        <div className='emotion-slider' key={emotion}>
-          {this._returnColorIcon(emotion)}
-          <span style={{lineHeight: '18px'}}>{emotion}</span>
-          <span className='emotion-question'>?</span>
-        </div>
-      )
-    })
     const revealButton = this.state.showAI ? null :
       <div className='reveal-button'>Click to reveal</div>
     return (
       <div className='visualization'>
         <div className='viz-1'>
           <h4>Your interpretation</h4>
-          <div className='emotion-sliders'>{inputs}</div>
+          <div className='emotion-sliders'>{this._returnInputs(false)}</div>
           <div ref={c => this.vizElement = c}>
-            <EmotionGraph emotions={this.state.emotions} size={this.state.vizSize}/>
+            <EmotionGraph emotions={this.state.emotions} size={this.state.vizSize} showGraph={true} animate={false}/>
           </div>
         </div>
-        <div className='viz-2'>
+        <div className='viz-2' onClick={this._showAI}>
           <h4>{`The AI's interpretation`}</h4>
+          <div>
+            <div className='emotion-sliders'>{this._returnInputs(true)}</div>
+          </div>
           <div style={{position: 'relative'}}>
             {revealButton}
-            <div className='emotion-sliders'>{aIInputs}</div>
-          </div>
-          <div>
-            <EmotionGraph emotions={this.state.analysis} size={this.state.vizSize}/>
+            <EmotionGraph emotions={this.state.analysis} size={this.state.vizSize} showGraph={this.state.showAI} animate={true} />
           </div>
         </div>
       </div>

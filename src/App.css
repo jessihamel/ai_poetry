@@ -61,9 +61,13 @@ table {
   height: 150px;
 }
 
+.App-header img {
+  margin-top: 15px;
+}
+
 h2 {
   font-size: 3em;
-  padding: 20px;
+  padding: 20px 0 15px 0;
   font-family: "Alegreya", serif;
   text-transform: uppercase;
   letter-spacing: 3px;
@@ -72,6 +76,7 @@ h2 {
 h3 {
   font-size: 1.5em;
   line-height: 1.3em;
+  font-weight: 400;
 }
 
 h4 {
@@ -81,8 +86,7 @@ h4 {
 }
 
 .intro-text {
-  padding-top: 15px;
-  line-height: 1.2em;
+  line-height: 1.4em;
 }
 
 select {
@@ -116,11 +120,12 @@ pre {
   padding: 30px 15px;
 }
 
-.viz-1 {
-  width: 50%;
-}
+.viz-1,
 .viz-2 {
   width: 50%;
+  margin: 15px;
+  border: 1px solid black;
+  padding-top: 15px;
 }
 
 .emotion-sliders {
@@ -133,6 +138,7 @@ pre {
   width: 250px;
   clear: both;
   padding-bottom: 4px;
+  min-height: 18px;
 }
 
 .emotion-slider span {
@@ -156,9 +162,8 @@ pre {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-}
-
-.emotion-graph {
-  border: 1px solid black;
-  margin: 20px 0;
+  z-index: 1;
+  cursor: pointer;
+  font-size: 1.3em;
+  text-transform: uppercase;
 }
