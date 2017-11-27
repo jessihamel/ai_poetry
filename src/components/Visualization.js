@@ -1,9 +1,10 @@
 import React from 'react';
 import EmotionGraph from './EmotionGraph';
+import Results from './Results';
 import {json} from 'd3-request';
 
 const emotions = ['Anger','Disgust','Fear','Joy','Sadness']
-const colors = ['#FF0000','#AAFF00','#AA00FF','#FFCE00','#00AAFF']
+const colors = ['#FF0055','#AAFF00','#AA00FF','#FFCE00','#00AAFF']
 // const colors2 = ['#FC1C40','#F5B76A','#653871','#C3DCB4','#152C62']
 
 export default class Visualization extends React.Component {
@@ -15,11 +16,13 @@ export default class Visualization extends React.Component {
         return a
       }, {}),
       analysis: {},
+      results: {},
       vizSize: 0,
       showAI: false
     }
     this._onChangeSlider = this._onChangeSlider.bind(this)
     this._showAI = this._showAI.bind(this)
+    this._resetResults = this._resetResults.bind(this)
     window.onresize = this._onResize.bind(this)
   }
 
@@ -36,7 +39,7 @@ export default class Visualization extends React.Component {
 
   _onChangeSlider(event) {
     // clone so no mutation of state
-    const newValues = Object.assign({}, this.state.emotions)
+    const newValues = this._clone(this.state.emotions)
     newValues[event.target.id].score = event.target.value
     this.setState({emotions: newValues})
   }
@@ -80,7 +83,32 @@ export default class Visualization extends React.Component {
   }
 
   _showAI() {
+    if (this.state.showAI) { return }
     this.setState({showAI: true})
+    this._saveResults()
+  }
+
+  _saveResults() {
+    const emotions = this._clone(this.state.emotions)
+    const analysis = this._clone(this.state.analysis)
+    const results = this._clone(this.state.results)
+    results[this.props.selected] = {emotions,analysis}
+    this.setState({results})
+  }
+
+  _resetResults() {
+    this.setState({results: {}})
+  }
+  _clone(objA) {
+    // simple deep clone of nested object to avoid mutating state
+    const objB = {}
+    Object.keys(objA).forEach(key => {
+      if (typeof(key) === 'object') {
+        this._clone(key)
+      }
+      objB[key] = Object.assign({}, objA[key])
+    })
+    return objB
   }
 
   _returnColorIcon(emotion) {
@@ -122,26 +150,34 @@ export default class Visualization extends React.Component {
 
   render() {
     const revealButton = this.state.showAI ? null :
-      <div className='reveal-button'>Click to reveal</div>
+      <div className='reveal-button button'>Click to reveal</div>
+    const resetButton = Object.keys(this.state.results).length ?
+      <div className='reset-button button' onClick={this._resetResults}>Reset All</div> :
+      null
     return (
-      <div className='visualization'>
-        <div className='viz-1'>
-          <h4>Your interpretation</h4>
-          <div className='emotion-sliders'>{this._returnInputs(false)}</div>
-          <div ref={c => this.vizElement = c}>
-            <EmotionGraph emotions={this.state.emotions} size={this.state.vizSize} showGraph={true} animate={false}/>
+      <div>
+        <div className='visualization'>
+          <div className='viz-1'>
+            <h4>Your interpretation</h4>
+            <div className='emotion-sliders'>{this._returnInputs(false)}</div>
+            <div ref={c => this.vizElement = c}>
+              <EmotionGraph emotions={this.state.emotions} size={this.state.vizSize} showGraph={true} animate={false} />
+            </div>
+          </div>
+          <div className='viz-2' onClick={this._showAI}>
+            <h4>The AI&#39;s interpretation</h4>
+            <div>
+              <div className='emotion-sliders'>{this._returnInputs(true)}</div>
+            </div>
+            <div style={{position: 'relative'}}>
+              {revealButton}
+              <EmotionGraph emotions={this.state.analysis} size={this.state.vizSize} showGraph={this.state.showAI} animate={true} />
+            </div>
           </div>
         </div>
-        <div className='viz-2' onClick={this._showAI}>
-          <h4>{`The AI's interpretation`}</h4>
-          <div>
-            <div className='emotion-sliders'>{this._returnInputs(true)}</div>
-          </div>
-          <div style={{position: 'relative'}}>
-            {revealButton}
-            <EmotionGraph emotions={this.state.analysis} size={this.state.vizSize} showGraph={this.state.showAI} animate={true} />
-          </div>
-        </div>
+        <h4>Previous Results</h4>
+        {resetButton}
+        <Results poems={this.props.poems} results={this.state.results} />
       </div>
     );
   }
