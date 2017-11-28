@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Rubik:300,400,500|Alegreya');
+@import url('https://fonts.googleapis.com/css?family=Rubik:300,300i,400,500|Alegreya');
 
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -90,6 +90,7 @@ h4 {
   text-transform: uppercase;
   letter-spacing: 1px;
   margin-bottom: 10px;
+  font-weight: 400;
 }
 
 .button {
@@ -102,6 +103,10 @@ h4 {
   font-weight: 400;
   cursor: pointer;
   text-transform: uppercase;
+}
+
+.italic {
+  font-style: italic;
 }
 
 .intro-text {
@@ -136,12 +141,15 @@ pre {
 
 .visualization {
   display: flex;
+  flex-wrap: wrap;
   padding: 30px 15px;
 }
 
 .viz-1,
 .viz-2 {
-  width: 50%;
+  width: 300px;
+  flex-grow: 2;
+  min-width: 300px;
   margin: 15px;
   border: 1px solid black;
   padding-top: 15px;
@@ -209,4 +217,20 @@ pre {
 
 .result-comparison {
   padding: 15px 10px 10px 10px;
+}
+
+.about {
+  text-align: left;
+  margin-bottom: 30px;
+}
+.about p {
+  margin-bottom: 15px;
+  line-height: 1.4em;
+}
+
+@media (max-width: 560px) {
+  .App {
+    width: 96%;
+    margin-left: 2%;
+  }
 }

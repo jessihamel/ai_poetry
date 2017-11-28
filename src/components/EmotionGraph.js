@@ -1,5 +1,9 @@
 import React from 'react';
 import {Motion, spring} from 'react-motion';
+import {scaleSqrt} from 'd3-scale';
+
+// use sqrt scale so the area is linear scaled to the value
+const scale = scaleSqrt().domain([0,100])
 
 export default class EmotionGraph extends React.Component {
   _rotateCoords(theta, x0, y0, cx = 0, cy = 0) {
@@ -9,7 +13,8 @@ export default class EmotionGraph extends React.Component {
   }
 
   _returnPath(score, rotationAngle, emotion) {
-    const yScaled = (score * (this.props.size / 2)) / 100
+    scale.range([0, this.props.size/2])
+    const yScaled = scale(score)
     const apex = this._rotateCoords(rotationAngle, 0, yScaled)
     const v1 = this._rotateCoords(rotationAngle, -(yScaled), 0)
     return(

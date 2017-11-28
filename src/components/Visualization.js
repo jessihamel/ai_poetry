@@ -97,7 +97,7 @@ export default class Visualization extends React.Component {
   }
 
   _resetResults() {
-    this.setState({results: {}})
+    this.setState({results: {}, showAI: false})
   }
   _clone(objA) {
     // simple deep clone of nested object to avoid mutating state
@@ -152,7 +152,12 @@ export default class Visualization extends React.Component {
     const revealButton = this.state.showAI ? null :
       <div className='reveal-button button'>Click to reveal</div>
     const resetButton = Object.keys(this.state.results).length ?
-      <div className='reset-button button' onClick={this._resetResults}>Reset All</div> :
+      (
+        <div>
+          <h4>Previous Results</h4>
+          <div className='reset-button button' onClick={this._resetResults}>Reset All</div>
+        </div>
+      ) :
       null
     return (
       <div>
@@ -175,7 +180,6 @@ export default class Visualization extends React.Component {
             </div>
           </div>
         </div>
-        <h4>Previous Results</h4>
         {resetButton}
         <Results poems={this.props.poems} results={this.state.results} />
       </div>
