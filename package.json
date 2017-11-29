@@ -2,6 +2,7 @@
   "name": "poetry_ai",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://jessihamel.github.io/ai_poetry",
   "dependencies": {
     "d3-dsv": "^1.0.8",
     "d3-request": "^1.0.6",
@@ -16,6 +17,10 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy" : "npm run build&&gh-pages -d build"
+  },
+  "devDependencies": {
+    "gh-pages": "^1.1.0"
   }
 }

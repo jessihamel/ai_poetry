@@ -3,8 +3,8 @@ import EmotionGraph from './EmotionGraph';
 import Results from './Results';
 import {json} from 'd3-request';
 
-const emotions = ['Anger','Disgust','Fear','Joy','Sadness']
-const colors = ['#FF0055','#AAFF00','#AA00FF','#FFCE00','#00AAFF']
+const emotions = ['Anger','Disgust','Joy','Fear','Sadness']
+const colors = ['#FF0000','#AAFF00','#FFCE00','#AA00FF','#00AAFF']
 // const colors2 = ['#FC1C40','#F5B76A','#653871','#C3DCB4','#152C62']
 
 export default class Visualization extends React.Component {
@@ -61,7 +61,10 @@ export default class Visualization extends React.Component {
         console.error(error)
         return
       }
-      const analysis = {}
+      const analysis = emotions.reduce((a,b,i) => {
+        a[b] = {score: '50', color: colors[i]}
+        return a
+      }, {})
       data.document_tone.tone_categories[0].tones.forEach(tone => {
         analysis[tone['tone_name']] = {
           score: tone.score * 100,

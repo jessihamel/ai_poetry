@@ -52,7 +52,7 @@ a:visited {
 
 .App {
   font-family: "Rubik", sans-serif;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 300;
   width: 80%;
   margin-left: 10%;
@@ -128,7 +128,7 @@ pre {
 
 .text-viz {
   margin-top: 15px;
-  margin-bottom: 50px;
+  margin-bottom: 15px;
 }
 
 .poem-text {
@@ -162,7 +162,7 @@ pre {
 
 .emotion-slider {
   margin: 0 auto;
-  width: 250px;
+  width: 270px;
   clear: both;
   padding-bottom: 4px;
   min-height: 18px;
@@ -180,7 +180,7 @@ pre {
   float: right;
 }
 
-.emotion-path {
+.emotion-graph g {
   mix-blend-mode: multiply;
 }
 
@@ -230,7 +230,7 @@ pre {
 
 @media (max-width: 560px) {
   .App {
-    width: 96%;
-    margin-left: 2%;
+    width: 90%;
+    margin-left: 5%;
   }
 }
