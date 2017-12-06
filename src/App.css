@@ -149,7 +149,7 @@ pre {
 .viz-2 {
   width: 300px;
   flex-grow: 2;
-  min-width: 300px;
+  min-width: 280px;
   margin: 15px;
   border: 1px solid black;
   padding-top: 15px;
@@ -162,7 +162,7 @@ pre {
 
 .emotion-slider {
   margin: 0 auto;
-  width: 270px;
+  width: 270px;n
   clear: both;
   padding-bottom: 4px;
   min-height: 18px;
@@ -233,4 +233,11 @@ pre {
     width: 90%;
     margin-left: 5%;
   }
+	.visualization {
+		padding: 15px 0;
+	}
+	.viz-1,
+	.viz-2 {
+		margin-left: 0;
+	}
 }
